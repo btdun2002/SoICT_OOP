@@ -1,8 +1,8 @@
 package model;
 
 public class Bang {
-    int dienTich;
-    int phiMotMet;
+    double dienTich;
+    double phiMotMet;
 
     public Bang() {
     }
@@ -12,23 +12,25 @@ public class Bang {
         this.phiMotMet = phiMotMet;
     }
 
-    public int getDienTich() {
+    public double getDienTich() {
         return dienTich;
     }
 
-    public void setDienTich(int dienTich) {
+    public void setDienTich(double dienTich) {
         this.dienTich = dienTich;
     }
 
-    public int getPhiMotMet() {
+    public double getPhiMotMet() {
         return phiMotMet;
     }
 
-    public void setPhiMotMet(int phiMotMet) {
+    public void setPhiMotMet(double phiMotMet) {
         this.phiMotMet = phiMotMet;
     }
-
-    public int getPhi() {
+    public String getNameBang(){
+        return "Bang Thuong";
+    }
+    public double getChiPhi() {
         return phiMotMet * dienTich;
     }
 }

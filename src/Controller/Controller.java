@@ -1,4 +1,7 @@
-package model;
+package Controller;
+
+import model.Bang;
+import model.DonHang;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

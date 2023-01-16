@@ -7,7 +7,7 @@ public class Bang {
     public Bang() {
     }
 
-    public Bang(int dienTich, int phiMotMet) {
+    public Bang(double dienTich, double phiMotMet) {
         this.dienTich = dienTich;
         this.phiMotMet = phiMotMet;
     }
@@ -28,7 +28,7 @@ public class Bang {
         this.phiMotMet = phiMotMet;
     }
     public String getNameBang(){
-        return "Bang Thuong";
+        return "Normal";
     }
     public double getChiPhi() {
         return phiMotMet * dienTich;

@@ -13,7 +13,6 @@ public class DonHang {
         this.ThoiGianThem=thoiGianThem;
     }
     public DonHang() {}
-
     public String getTen() {
         return ten;
     }

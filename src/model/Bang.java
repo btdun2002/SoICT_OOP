@@ -32,5 +32,6 @@ public class Bang {
     }
     public double getChiPhi() {
         return phiMotMet * dienTich;
+
     }
 }

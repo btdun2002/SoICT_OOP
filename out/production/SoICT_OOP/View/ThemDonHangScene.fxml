@@ -8,41 +8,47 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ThemDonHangController">
    <children>
-      <Text layoutX="57.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Họ Tên Khách Hàng" textAlignment="CENTER">
+      <Text layoutX="63.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Họ Tên Khách Hàng" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
       </Text>
-      <Text layoutX="191.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thêm Đơn Hàng" textAlignment="CENTER">
+      <Text layoutX="191.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thêm Đơn Hàng" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="33.0" />
          </font>
       </Text>
-      <TextField id="CustomerName" layoutX="274.0" layoutY="98.0" prefHeight="26.0" prefWidth="281.0" />
-      <Text layoutX="57.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Địa chỉ khách hàng" textAlignment="CENTER">
+      <TextField fx:id="CustomerName" layoutX="280.0" layoutY="72.0" prefHeight="26.0" prefWidth="281.0" />
+      <Text layoutX="63.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Địa chỉ khách hàng" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
       </Text>
-      <TextField id="CustomerAddress" layoutX="274.0" layoutY="146.0" prefHeight="26.0" prefWidth="281.0" />
-      <Text layoutX="57.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diện tích" textAlignment="CENTER">
+      <TextField fx:id="CustomerAddress" layoutX="280.0" layoutY="120.0" prefHeight="26.0" prefWidth="281.0" />
+      <Text layoutX="63.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Diện tích" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
       </Text>
-      <TextField id="Area" layoutX="274.0" layoutY="200.0" prefHeight="26.0" prefWidth="281.0" />
-      <Text layoutX="57.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chi phí lắp đặt 1m2" textAlignment="CENTER">
+      <TextField fx:id="Area" layoutX="280.0" layoutY="174.0" prefHeight="26.0" prefWidth="281.0" />
+      <Text layoutX="63.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chi phí lắp đặt 1m2" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
       </Text>
-      <TextField id="CostPer1m2" layoutX="274.0" layoutY="253.0" prefHeight="26.0" prefWidth="281.0" />
-      <Text layoutX="57.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thời gian đặt hàng" textAlignment="CENTER">
+      <TextField fx:id="CostPer1m2" layoutX="280.0" layoutY="227.0" prefHeight="26.0" prefWidth="281.0" />
+      <Text layoutX="63.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thời gian đặt hàng" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
       </Text>
-      <TextField id="Time" layoutX="274.0" layoutY="303.0" prefHeight="26.0" prefWidth="281.0" />
-      <Button layoutX="243.0" layoutY="351.0" mnemonicParsing="false" onAction="#ThemButton" prefHeight="26.0" prefWidth="139.0" text="Thêm" />
+      <TextField fx:id="Time" layoutX="280.0" layoutY="277.0" prefHeight="26.0" prefWidth="281.0" />
+      <Button layoutX="230.0" layoutY="365.0" mnemonicParsing="false" onAction="#ThemButton" prefHeight="26.0" prefWidth="139.0" text="Thêm" />
+      <Text layoutX="63.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loại hóa đơn" textAlignment="CENTER">
+         <font>
+            <Font name="Calibri" size="22.0" />
+         </font>
+      </Text>
+      <TextField id=" " fx:id="Type" layoutX="280.0" layoutY="324.0" prefHeight="26.0" prefWidth="281.0" />
    </children>
 </AnchorPane>

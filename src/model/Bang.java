@@ -28,7 +28,7 @@ public class Bang {
         this.phiMotMet = phiMotMet;
     }
     public String getNameBang(){
-        return "Bang Thuong";
+        return "Normal";
     }
     public double getChiPhi() {
         return phiMotMet * dienTich;

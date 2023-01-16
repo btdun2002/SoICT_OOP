@@ -6,7 +6,7 @@ import model.BangTamGiac;
 import model.BangTron;
 import model.DonHang;
 
-import java.awt.*;
+import javafx.scene.control.TextField;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,31 +15,43 @@ import java.sql.SQLException;
 public class ThemDonHangController {
     @FXML
     TextField CustomerName;
+    @FXML
     TextField CustomerAddress;
+    @FXML
     TextField Area;
+    @FXML
     TextField CostPer1m2;
+    @FXML
     TextField Time;
-    TextField LoaiHoaDon;
+    @FXML
+    TextField Type;
 
+    @FXML
     public void ThemButton(javafx.event.ActionEvent ActionEvent) {
         DonHang a;
         Bang b;
         String url = "jdbc:mysql://localhost:3306/oop";
         String pass = "";
         String username= "root";
-        if (LoaiHoaDon.getText().equals("Normal")) {
-            b = new Bang(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+        System.out.println(Type.getText());
 
+        if (Type.getText().equals("Normal")) {
+            b = new Bang(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            System.out.println("Nor");
         }
-        else if (LoaiHoaDon.getText().equals("Triangle")){
+        else if (Type.getText().equals("Triangle")){
             // UpCasting
             b = new BangTamGiac(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            System.out.println("Tri");
         }
-        else if (LoaiHoaDon.getText().equals("Circle")){
+        else if (Type.getText().equals("Circle")){
             // UpCasting
             b = new BangTron(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            System.out.println("Cir");
         }
-        else {b=new Bang();}
+        else {b=new Bang();
+            System.out.println("Error");
+        }
         a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getText());
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
             String Insert = "INSERT INTO `receipttable`(`CustomerName`, `TimeAdd`, `Address`, `Area`, `CostPer1m2`, `Cost`, `Type`) VALUES (?,?,?,?,?,?,?)";

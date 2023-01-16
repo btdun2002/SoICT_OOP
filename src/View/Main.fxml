@@ -8,7 +8,7 @@
    <children>
       <Pane prefHeight="400.0" prefWidth="156.0" style="-fx-background-color: Red;">
          <children>
-            <Button id="ThemDonHangButton" layoutX="10.0" layoutY="75.0" mnemonicParsing="false" onAction="#ThemHoaDon" prefHeight="36.0" prefWidth="132.0" style="-fx-background-color: white;" text="Thêm đơn hàng" />
+            <Button layoutX="10.0" layoutY="75.0" mnemonicParsing="false" onAction="#ThemHoaDon" prefHeight="36.0" prefWidth="132.0" style="-fx-background-color: white;" text="Thêm đơn hàng" />
             <Button id="XoaDonHangButton" layoutX="12.0" layoutY="129.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="132.0" style="-fx-background-color: white;" text="Xóa đơn hàng" />
             <Button id="SuaDonHangButton" layoutX="12.0" layoutY="182.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="132.0" style="-fx-background-color: white;" text="Sửa đơn hàng" />
             <Button id="TimKiemButton" layoutX="12.0" layoutY="233.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="132.0" style="-fx-background-color: white;" text="Tìm Kiếm" />

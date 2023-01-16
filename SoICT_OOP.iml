@@ -7,15 +7,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../OOP/mysql-connector-j-8.0.31/mysql-connector-j-8.0.31.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../OOP/mysql-connector-j-8.0.31/mysql-connector-j-8.0.31.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="lib" level="project" />
   </component>
 </module>

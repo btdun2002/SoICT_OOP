@@ -23,4 +23,12 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
+    
+    public void BackToMain(javafx.event.ActionEvent actionEvent) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("../View/Main.fxml"));
+        stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

@@ -8,7 +8,7 @@ public class BangTron extends Bang {
 
     @Override
     public double getChiPhi() {
-        return super.getDienTich()*super.getPhiMotMet()+5000000;
+        return super.getDienTich()*super.getPhiMotMet()+500000;
     }
 
     @Override

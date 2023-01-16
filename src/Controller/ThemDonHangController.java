@@ -1,12 +1,22 @@
 package Controller;
 
+import com.sun.javafx.fxml.builder.web.WebEngineBuilder;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import model.Bang;
 import model.BangTamGiac;
 import model.BangTron;
 import model.DonHang;
 
 import javafx.scene.control.TextField;
+
+import javax.swing.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,7 +37,7 @@ public class ThemDonHangController {
     TextField Type;
 
     @FXML
-    public void ThemButton(javafx.event.ActionEvent ActionEvent) {
+    public void ThemButton(ActionEvent ActionEvent) throws IOException {
         DonHang a;
         Bang b;
         String url = "jdbc:mysql://localhost:3306/oop";
@@ -35,22 +45,22 @@ public class ThemDonHangController {
         String username= "root";
         System.out.println(Type.getText());
 
-        if (Type.getText().equals("Normal")) {
+        if (Type.getText().equals("Thường")) {
             b = new Bang(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
-            System.out.println("Nor");
+
         }
-        else if (Type.getText().equals("Triangle")){
+        else if (Type.getText().equals("Tam Giác")){
             // UpCasting
             b = new BangTamGiac(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
-            System.out.println("Tri");
+
         }
-        else if (Type.getText().equals("Circle")){
+        else if (Type.getText().equals("Tròn")){
             // UpCasting
             b = new BangTron(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
-            System.out.println("Cir");
+
         }
         else {b=new Bang();
-            System.out.println("Error");
+
         }
         a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getText());
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
@@ -65,9 +75,13 @@ public class ThemDonHangController {
             ps.setString(7,a.getBang().getNameBang());
             ps.execute();
         }
+
         catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+       JOptionPane.showMessageDialog(null,"Thêm thành công","Success",JOptionPane.PLAIN_MESSAGE);
+        SceneController sceneController=new SceneController();
+        sceneController.BackToMain(ActionEvent);
     }
 
 }

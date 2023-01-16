@@ -2,7 +2,7 @@ package model;
 
 public class BangTron extends Bang {
 
-    public BangTron(int dienTich, int phiMotMet) {
+    public BangTron(double dienTich, double phiMotMet) {
         super(dienTich, phiMotMet);
     }
 
@@ -13,6 +13,6 @@ public class BangTron extends Bang {
 
     @Override
     public String getNameBang() {
-        return "Bang Tron";
+        return "Circle";
     }
 }

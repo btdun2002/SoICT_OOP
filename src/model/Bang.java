@@ -7,7 +7,7 @@ public class Bang {
     public Bang() {
     }
 
-    public Bang(int dienTich, int phiMotMet) {
+    public Bang(double dienTich, double phiMotMet) {
         this.dienTich = dienTich;
         this.phiMotMet = phiMotMet;
     }

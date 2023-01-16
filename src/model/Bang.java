@@ -16,7 +16,7 @@ public class Bang {
         return dienTich;
     }
 
-    public void setDienTich(int dienTich) {
+    public void setDienTich(double dienTich) {
         this.dienTich = dienTich;
     }
 
@@ -27,9 +27,11 @@ public class Bang {
     public void setPhiMotMet(double phiMotMet) {
         this.phiMotMet = phiMotMet;
     }
+    public String getNameBang(){
+        return "Normal";
+    }
+    public double getChiPhi() {
+        return phiMotMet * dienTich;
 
-
-    public double getChiPhi(){
-        return dienTich*phiMotMet;
     }
 }

@@ -3,16 +3,16 @@ package model;
 public class DonHang {
     String ten;
     String diaChi;
+    String ThoiGianThem;
     Bang bang;
 
-    public DonHang(String ten, String diaChi, Bang bang) {
+    public DonHang(String ten, String diaChi, Bang bang, String thoiGianThem) {
         this.ten = ten;
         this.diaChi = diaChi;
         this.bang = bang;
+        this.ThoiGianThem=thoiGianThem;
     }
-
     public DonHang() {}
-
     public String getTen() {
         return ten;
     }
@@ -32,8 +32,15 @@ public class DonHang {
     public Bang getBang() {
         return bang;
     }
-
     public void setBang(Bang bang) {
         this.bang = bang;
     }
+    public String getThoiGianThem() {
+        return ThoiGianThem;
+    }
+
+    public void setThoiGianThem(String thoiGianThem) {
+        ThoiGianThem = thoiGianThem;
+    }
+
 }

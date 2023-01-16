@@ -9,7 +9,7 @@ import javafx.stage.StageStyle;
 
 public class MainStage extends Application {
     public static void main(String[] args) {
-        Application.launch(args);
+        launch(args);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class MainStage extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../View/Main.fxml"));
             stage.initStyle(StageStyle.DECORATED);
-            Scene scene = new Scene(root,400,400);
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         }

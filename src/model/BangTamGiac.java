@@ -3,6 +3,7 @@ package model;
 public class BangTamGiac extends Bang {
     public BangTamGiac(double dienTich, double phiMotMet) {
         super(dienTich, phiMotMet);
+        super.tenBang="Circle";
     }
 
     @Override

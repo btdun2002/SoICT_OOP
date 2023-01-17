@@ -43,7 +43,7 @@ public class ThemDonHangController {
         String url = "jdbc:mysql://localhost:3306/oop";
         String pass = "";
         String username= "root";
-        System.out.println(Type.getText());
+//        System.out.println(Type.getText());
 
         if (Type.getText().equals("Thường")) {
             b = new Bang(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
@@ -63,6 +63,7 @@ public class ThemDonHangController {
 
         }
         a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getText());
+
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
             String Insert = "INSERT INTO `receipttable`(`CustomerName`, `TimeAdd`, `Address`, `Area`, `CostPer1m2`, `Cost`, `Type`) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(Insert);

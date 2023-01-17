@@ -3,6 +3,8 @@ package model;
 public class Bang {
     double dienTich;
     double phiMotMet;
+    String tenBang;
+
 
     public Bang() {
     }
@@ -10,6 +12,7 @@ public class Bang {
     public Bang(double dienTich, double phiMotMet) {
         this.dienTich = dienTich;
         this.phiMotMet = phiMotMet;
+        this.tenBang= "Normal";
     }
 
     public double getDienTich() {

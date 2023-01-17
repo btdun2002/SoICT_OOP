@@ -20,7 +20,7 @@
          </children>
       </Pane>
       <FontAwesomeIcon glyphName="USER_PLUS" layoutX="190.0" layoutY="74.0" onMouseClicked="#ThemHoaDon" size="30" />
-      <TableView layoutX="182.0" layoutY="89.0" prefHeight="283.0" prefWidth="560.0">
+      <TableView fx:id="donHangTableView" layoutX="182.0" layoutY="89.0" prefHeight="283.0" prefWidth="560.0">
         <columns>
           <TableColumn fx:id="CusCol" text="Tên khách" />
           <TableColumn fx:id="TimeCol" text="Thời gian" />

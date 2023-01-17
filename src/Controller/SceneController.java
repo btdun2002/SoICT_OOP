@@ -30,18 +30,18 @@ public class SceneController {
     private Parent root;
     private Scene scene;
     @FXML
-    private TableView<DonHang> donHangTableView;
+    public TableView<DonHang> donHangTableView;
     @FXML
     private TableColumn<DonHang, String> AddressCol;
 
     @FXML
-    private TableColumn<DonHang, Double> AreaCol;
+    private TableColumn<Bang, Double> AreaCol;
 
     @FXML
-    private TableColumn<DonHang, Double> CostCol;
+    private TableColumn<Bang, Double> CostCol;
 
     @FXML
-    private TableColumn<DonHang, Double> CostPerm2Col;
+    private TableColumn<Bang, Double> CostPerm2Col;
 
     @FXML
     private TableColumn<DonHang, String> CusCol;
@@ -50,11 +50,12 @@ public class SceneController {
     private TableColumn<DonHang, String> TimeCol;
 
     @FXML
-    private TableColumn<DonHang, String> TypeCol;
+    private TableColumn<Bang, String> TypeCol;
     ObservableList<DonHang> DonHangList= FXCollections.observableArrayList();
+    ObservableList<Bang> BangList= FXCollections.observableArrayList();
     @FXML
     public void initialize(){
-        loadTable();
+        refreshTable();
     }
     public void refreshTable(){
         System.out.println("rt");
@@ -62,15 +63,17 @@ public class SceneController {
          String pass = "";
          String username= "root";
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
-            conn.getCatalog();
+            int i =0;
+            System.out.println(conn.getCatalog());
             String query = "SELECT * FROM `receipttable`";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs =  ps.executeQuery();
             while (rs.next()) {
-                if (rs.getString("Type").equals("Normal")) {
-                    System.out.println("Normal");
-                    Bang b = new Bang(rs.getDouble("Area"),rs.getDouble("CostPer1m2"));
 
+                if (rs.getString("Type").equals("Normal")) {
+
+                    Bang b = new Bang(rs.getDouble("Area"),rs.getDouble("CostPer1m2"));
+                    BangList.add(b);
                     DonHangList.add(new DonHang(rs.getString("CustomerName"),
                                                 rs.getString("Address"),
                                                 b,
@@ -78,7 +81,7 @@ public class SceneController {
                 }
                 else if (rs.getString("Type").equals("Circle")) {
                     Bang b = new BangTron(rs.getDouble("Area"),rs.getDouble("CostPer1m2"));
-
+                    BangList.add(b);
                     DonHangList.add(new DonHang(rs.getString("CustomerName"),
                             rs.getString("Address"),
                             b,
@@ -86,26 +89,36 @@ public class SceneController {
                 }
                 else {
                     Bang b = new BangTamGiac(rs.getDouble("Area"),rs.getDouble("CostPer1m2"));
-
+                    BangList.add(b);
                     DonHangList.add(new DonHang(rs.getString("CustomerName"),
                             rs.getString("Address"),
                             b,
                             rs.getString("TimeAdd")));
                 }
-                donHangTableView.setItems(DonHangList);
             }
+
+            CusCol.setCellValueFactory(new PropertyValueFactory<>("ten"));
+            AddressCol.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
+            TimeCol.setCellValueFactory(new PropertyValueFactory<>("ThoiGianThem"));
+            AreaCol.setCellValueFactory(new PropertyValueFactory<>("dienTich"));
+            CostPerm2Col.setCellValueFactory(new PropertyValueFactory<>(""));
+//            CostCol.setCellValueFactory(new PropertyValueFactory<>("bang.getChiPhi()"));
+//            TypeCol.setCellValueFactory(new PropertyValueFactory<>("bang.getNameBang()"));
+            donHangTableView.setItems(DonHangList);
+
         }
         catch (SQLException throwables){
-
+            throwables.printStackTrace();
         }
     }
     private void loadTable() {
 
 //        try (Connection conn = DriverManager.getConnection(url,username,pass)){
             refreshTable();
-//            CusCol.setCellValueFactory(new PropertyValueFactory<DonHang, String>("ten"));
-//            AddressCol.setCellValueFactory(new PropertyValueFactory<DonHang, String>("diachi"));
-//            TimeCol.setCellValueFactory(new PropertyValueFactory<DonHang,String>("ThoiGianThem"));
+            CusCol.setCellValueFactory(new PropertyValueFactory<DonHang, String>("ten"));
+            AddressCol.setCellValueFactory(new PropertyValueFactory<DonHang, String>("diachi"));
+            TimeCol.setCellValueFactory(new PropertyValueFactory<DonHang,String>("ThoiGianThem"));
+            donHangTableView.setItems(DonHangList);
 //            AreaCol.setCellValueFactory(new PropertyValueFactory<DonHang,Double>("bang.getDienTich()"));
 //            CostPerm2Col.setCellValueFactory(new PropertyValueFactory<DonHang,Double>("bang.getPhiMotMet()"));
 //            CostCol.setCellValueFactory(new PropertyValueFactory<DonHang,Double>("bang.getChiPhi()"));

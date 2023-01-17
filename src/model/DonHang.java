@@ -5,11 +5,6 @@ public class DonHang {
     String diaChi;
     String ThoiGianThem;
     Bang bang;
-//    Double dienTich;
-//    Double ChiPhi1m2;
-//    Double TongPhi;
-//    String tenBang;
-
     public DonHang(String ten, String diaChi, Bang bang, String thoiGianThem) {
         this.ten = ten;
         this.diaChi = diaChi;

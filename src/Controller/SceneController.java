@@ -14,10 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import javafx.stage.StageStyle;
-import model.Bang;
-import model.BangTamGiac;
-import model.BangTron;
-import model.DonHang;
+import model.*;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -30,32 +27,31 @@ public class SceneController {
     private Parent root;
     private Scene scene;
     @FXML
-    public TableView<DonHang> donHangTableView;
+    public TableView<DonHangDataBase> donHangTableView;
     @FXML
-    private TableColumn<DonHang, String> AddressCol;
+    private TableColumn<DonHangDataBase, String> AddressCol;
 
     @FXML
-    private TableColumn<Bang, Double> AreaCol;
+    private TableColumn<DonHangDataBase, Double> AreaCol;
 
     @FXML
-    private TableColumn<Bang, Double> CostCol;
+    private TableColumn<DonHangDataBase, Double> CostCol;
 
     @FXML
-    private TableColumn<Bang, Double> CostPerm2Col;
+    private TableColumn<DonHangDataBase, Double> CostPerm2Col;
 
     @FXML
-    private TableColumn<DonHang, String> CusCol;
+    private TableColumn<DonHangDataBase, String> CusCol;
 
     @FXML
-    private TableColumn<DonHang, String> TimeCol;
+    private TableColumn<DonHangDataBase, String> TimeCol;
 
     @FXML
-    private TableColumn<Bang, String> TypeCol;
-    ObservableList<DonHang> DonHangList= FXCollections.observableArrayList();
-    ObservableList<Bang> BangList= FXCollections.observableArrayList();
+    private TableColumn<DonHangDataBase, String> TypeCol;
+    ObservableList<DonHangDataBase> DonHangList= FXCollections.observableArrayList();
     @FXML
     public void initialize(){
-        refreshTable();
+        loadTable();
     }
     public void refreshTable(){
         System.out.println("rt");
@@ -69,41 +65,26 @@ public class SceneController {
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs =  ps.executeQuery();
             while (rs.next()) {
-
-                if (rs.getString("Type").equals("Normal")) {
-
-                    Bang b = new Bang(rs.getDouble("Area"),rs.getDouble("CostPer1m2"));
-                    BangList.add(b);
-                    DonHangList.add(new DonHang(rs.getString("CustomerName"),
-                                                rs.getString("Address"),
-                                                b,
-                                                rs.getString("TimeAdd")));
-                }
-                else if (rs.getString("Type").equals("Circle")) {
-                    Bang b = new BangTron(rs.getDouble("Area"),rs.getDouble("CostPer1m2"));
-                    BangList.add(b);
-                    DonHangList.add(new DonHang(rs.getString("CustomerName"),
+                    DonHangList.add(new DonHangDataBase(rs.getString("CustomerName"),
                             rs.getString("Address"),
-                            b,
-                            rs.getString("TimeAdd")));
-                }
-                else {
-                    Bang b = new BangTamGiac(rs.getDouble("Area"),rs.getDouble("CostPer1m2"));
-                    BangList.add(b);
-                    DonHangList.add(new DonHang(rs.getString("CustomerName"),
-                            rs.getString("Address"),
-                            b,
-                            rs.getString("TimeAdd")));
-                }
+                            rs.getString("TimeAdd"),
+                            rs.getDouble("Area"),
+                            rs.getDouble("CostPer1m2"),
+                            rs.getDouble("Cost"),
+                            rs.getString("Type")));
+
+
+
+
             }
 
             CusCol.setCellValueFactory(new PropertyValueFactory<>("ten"));
             AddressCol.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
             TimeCol.setCellValueFactory(new PropertyValueFactory<>("ThoiGianThem"));
             AreaCol.setCellValueFactory(new PropertyValueFactory<>("dienTich"));
-            CostPerm2Col.setCellValueFactory(new PropertyValueFactory<>(""));
-//            CostCol.setCellValueFactory(new PropertyValueFactory<>("bang.getChiPhi()"));
-//            TypeCol.setCellValueFactory(new PropertyValueFactory<>("bang.getNameBang()"));
+            CostPerm2Col.setCellValueFactory(new PropertyValueFactory<>("ChiPhi1m2"));
+            CostCol.setCellValueFactory(new PropertyValueFactory<>("TongPhi"));
+            TypeCol.setCellValueFactory(new PropertyValueFactory<>("tenBang"));
             donHangTableView.setItems(DonHangList);
 
         }
@@ -115,10 +96,14 @@ public class SceneController {
 
 //        try (Connection conn = DriverManager.getConnection(url,username,pass)){
             refreshTable();
-            CusCol.setCellValueFactory(new PropertyValueFactory<DonHang, String>("ten"));
-            AddressCol.setCellValueFactory(new PropertyValueFactory<DonHang, String>("diachi"));
-            TimeCol.setCellValueFactory(new PropertyValueFactory<DonHang,String>("ThoiGianThem"));
-            donHangTableView.setItems(DonHangList);
+//            CusCol.setCellValueFactory(new PropertyValueFactory<DonHangDataBase, String>("ten"));
+//            AddressCol.setCellValueFactory(new PropertyValueFactory<DonHang, String>("diachi"));
+//            TimeCol.setCellValueFactory(new PropertyValueFactory<DonHang,String>("ThoiGianThem"));
+//            AreaCol.setCellValueFactory(new PropertyValueFactory<Bang,Double>("dienTich"));
+//            CostPerm2Col.setCellValueFactory(new PropertyValueFactory<Bang,Double>("phiMotMet"));
+//            CostCol.setCellValueFactory(new PropertyValueFactory<Bang,Double>("bang.getChiPhi()"));
+//            TypeCol.setCellValueFactory(new PropertyValueFactory<Bang,String>("bang.getNameBang()"));
+//            donHangTableView.setItems(DonHangList);
 //            AreaCol.setCellValueFactory(new PropertyValueFactory<DonHang,Double>("bang.getDienTich()"));
 //            CostPerm2Col.setCellValueFactory(new PropertyValueFactory<DonHang,Double>("bang.getPhiMotMet()"));
 //            CostCol.setCellValueFactory(new PropertyValueFactory<DonHang,Double>("bang.getChiPhi()"));

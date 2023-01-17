@@ -45,16 +45,16 @@ public class ThemDonHangController {
         String username= "root";
 //        System.out.println(Type.getText());
 
-        if (Type.getText().equals("Thường")) {
+        if (Type.getText().equals("Normal")) {
             b = new Bang(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
 
         }
-        else if (Type.getText().equals("Tam Giác")){
+        else if (Type.getText().equals("Triangle")){
             // UpCasting
             b = new BangTamGiac(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
 
         }
-        else if (Type.getText().equals("Tròn")){
+        else if (Type.getText().equals("Circle")){
             // UpCasting
             b = new BangTron(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
 
@@ -80,7 +80,7 @@ public class ThemDonHangController {
         catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-       JOptionPane.showMessageDialog(null,"Thêm thành công","Success",JOptionPane.PLAIN_MESSAGE);
+       JOptionPane.showMessageDialog(null,"Adding successfully","Success",JOptionPane.PLAIN_MESSAGE);
         SceneController sceneController=new SceneController();
         sceneController.BackToMain(ActionEvent);
     }

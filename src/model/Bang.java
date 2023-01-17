@@ -12,7 +12,7 @@ public class Bang {
     public Bang(double dienTich, double phiMotMet) {
         this.dienTich = dienTich;
         this.phiMotMet = phiMotMet;
-        this.tenBang= "Normal";
+
     }
 
     public double getDienTich() {

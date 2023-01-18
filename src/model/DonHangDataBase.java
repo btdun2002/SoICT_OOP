@@ -21,9 +21,7 @@ public class DonHangDataBase {
         return dienTich;
     }
 
-    public Double getChiPhi1m2() {
-        return ChiPhi1m2;
-    }
+
 
     public Double getTongPhi() {
         return TongPhi;
@@ -35,17 +33,16 @@ public class DonHangDataBase {
 
     String ThoiGianThem;
     Double dienTich;
-    Double ChiPhi1m2;
     Double TongPhi;
     String tenBang;
 
-    public DonHangDataBase(int ID, String ten, String diaChi, String thoiGianThem, Double dienTich, Double chiPhi1m2, Double tongPhi, String tenBang) {
+    public DonHangDataBase(int ID, String ten, String diaChi, String thoiGianThem, Double dienTich, Double tongPhi, String tenBang) {
         this.ID = ID;
         this.ten = ten;
         this.diaChi = diaChi;
         ThoiGianThem = thoiGianThem;
         this.dienTich = dienTich;
-        ChiPhi1m2 = chiPhi1m2;
+
         TongPhi = tongPhi;
         this.tenBang = tenBang;
     }
@@ -72,10 +69,6 @@ public class DonHangDataBase {
 
     public void setDienTich(Double dienTich) {
         this.dienTich = dienTich;
-    }
-
-    public void setChiPhi1m2(Double chiPhi1m2) {
-        ChiPhi1m2 = chiPhi1m2;
     }
 
     public void setTongPhi(Double tongPhi) {

@@ -15,29 +15,20 @@ import java.sql.SQLException;
 
 public class SuaDonHangController
 {
-
     @FXML
     private TextField Area;
-
-    @FXML
-    private TextField CostPer1m2;
-
     @FXML
     private TextField CustomerAddress;
 
     @FXML
     private TextField CustomerName;
-
     @FXML
     private Button EditCommit;
-
     @FXML
     private TextField Time;
-
     @FXML
     private TextField Type;
     private int ID;
-
     @FXML
     void EditButton(ActionEvent ActionEvent) throws IOException {
         DonHang a;
@@ -45,39 +36,35 @@ public class SuaDonHangController
         String url = "jdbc:mysql://localhost:3306/oop";
         String pass = "";
         String username= "root";
-//        System.out.println(Type.getText());
-
         if (Type.getText().equals("Normal")) {
-            b = new Bang(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            b = new Bang(Double.parseDouble(Area.getText()));
 
         }
         else if (Type.getText().equals("Triangle")){
             // UpCasting
-            b = new BangTamGiac(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            b = new BangTamGiac(Double.parseDouble(Area.getText()));
 
         }
         else if (Type.getText().equals("Circle")){
             // UpCasting
-            b = new BangTron(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            b = new BangTron(Double.parseDouble(Area.getText()));
 
         }
         else {b=new Bang();
 
         }
         a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getText());
-
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
             String Insert = "UPDATE `receipttable` SET`CustomerName`=?," +
-                    "`TimeAdd`=?,`Address`=?,`Area`=?,`CostPer1m2`=?," +
+                    "`TimeAdd`=?,`Address`=?,`Area`=?," +
                     "`Cost`=?,`Type`= ? WHERE `ID` = "+this.ID;
             PreparedStatement ps = conn.prepareStatement(Insert);
             ps.setString(1,a.getTen());
             ps.setString(2,a.getThoiGianThem());
             ps.setString(3,a.getDiaChi());
             ps.setDouble(4,a.getBang().getDienTich());
-            ps.setDouble(5,a.getBang().getPhiMotMet());
-            ps.setDouble(6,a.getBang().getChiPhi());
-            ps.setString(7,a.getBang().getNameBang());
+            ps.setDouble(5,a.getBang().getChiPhi());
+            ps.setString(6,a.getBang().getNameBang());
             ps.execute();
         }
 
@@ -91,7 +78,6 @@ public class SuaDonHangController
     public void  setEdit(DonHangDataBase donHangDataBase){
         CustomerName.setText(donHangDataBase.getTen());
         this.Area.setText(String.valueOf(donHangDataBase.getDienTich()));
-        this.CostPer1m2.setText(String.valueOf(donHangDataBase.getChiPhi1m2()));
         this.CustomerAddress.setText(donHangDataBase.getDiaChi());
         this.Time.setText(donHangDataBase.getThoiGianThem());
         this.Type.setText(donHangDataBase.getTenBang());

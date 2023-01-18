@@ -2,16 +2,19 @@ package model;
 
 public class Bang {
     double dienTich;
-    double phiMotMet;
+    double phiMotMet= 30000;
     String tenBang;
 
+    public void setPhiMotMet(double phiMotMet) {
+        this.phiMotMet = phiMotMet;
+    }
 
     public Bang() {
     }
 
-    public Bang(double dienTich, double phiMotMet) {
+    public Bang(double dienTich) {
         this.dienTich = dienTich;
-        this.phiMotMet = phiMotMet;
+
 
     }
 
@@ -27,9 +30,6 @@ public class Bang {
         return phiMotMet;
     }
 
-    public void setPhiMotMet(double phiMotMet) {
-        this.phiMotMet = phiMotMet;
-    }
     public String getNameBang(){
         return "Normal";
     }

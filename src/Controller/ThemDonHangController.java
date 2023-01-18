@@ -30,8 +30,6 @@ public class ThemDonHangController {
     @FXML
     TextField Area;
     @FXML
-    TextField CostPer1m2;
-    @FXML
     TextField Time;
     @FXML
     TextField Type;
@@ -46,17 +44,17 @@ public class ThemDonHangController {
 //        System.out.println(Type.getText());
 
         if (Type.getText().equals("Normal")) {
-            b = new Bang(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            b = new Bang(Double.parseDouble(Area.getText()));
 
         }
         else if (Type.getText().equals("Triangle")){
             // UpCasting
-            b = new BangTamGiac(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            b = new BangTamGiac(Double.parseDouble(Area.getText()));
 
         }
         else if (Type.getText().equals("Circle")){
             // UpCasting
-            b = new BangTron(Double.parseDouble(Area.getText()),Double.parseDouble(CostPer1m2.getText()));
+            b = new BangTron(Double.parseDouble(Area.getText()));
 
         }
         else {b=new Bang();
@@ -65,15 +63,14 @@ public class ThemDonHangController {
         a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getText());
 
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
-            String Insert = "INSERT INTO `receipttable`(`CustomerName`, `TimeAdd`, `Address`, `Area`, `CostPer1m2`, `Cost`, `Type`) VALUES (?,?,?,?,?,?,?)";
+            String Insert = "INSERT INTO `receipttable`(`CustomerName`, `TimeAdd`, `Address`, `Area`,`Cost`,`Type`) VALUES (?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(Insert);
             ps.setString(1,a.getTen());
             ps.setString(2,a.getThoiGianThem());
             ps.setString(3,a.getDiaChi());
             ps.setDouble(4,a.getBang().getDienTich());
-            ps.setDouble(5,a.getBang().getPhiMotMet());
-            ps.setDouble(6,a.getBang().getChiPhi());
-            ps.setString(7,a.getBang().getNameBang());
+            ps.setDouble(5,a.getBang().getChiPhi());
+            ps.setString(6,a.getBang().getNameBang());
             ps.execute();
         }
 

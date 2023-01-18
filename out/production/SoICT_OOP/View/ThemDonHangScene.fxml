@@ -31,24 +31,18 @@
          </font>
       </Text>
       <TextField fx:id="Area" layoutX="280.0" layoutY="174.0" prefHeight="26.0" prefWidth="281.0" />
-      <Text layoutX="63.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost per m2" textAlignment="CENTER">
+      <Text layoutX="63.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time " textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="CostPer1m2" layoutX="280.0" layoutY="227.0" prefHeight="26.0" prefWidth="281.0" />
-      <Text layoutX="63.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time " textAlignment="CENTER">
+      <TextField fx:id="Time" layoutX="280.0" layoutY="229.0" prefHeight="26.0" prefWidth="281.0" />
+      <Button layoutX="230.0" layoutY="344.0" mnemonicParsing="false" onAction="#ThemButton" prefHeight="26.0" prefWidth="139.0" text="Add" />
+      <Text layoutX="63.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="Time" layoutX="280.0" layoutY="277.0" prefHeight="26.0" prefWidth="281.0" />
-      <Button layoutX="230.0" layoutY="365.0" mnemonicParsing="false" onAction="#ThemButton" prefHeight="26.0" prefWidth="139.0" text="Add" />
-      <Text layoutX="63.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" textAlignment="CENTER">
-         <font>
-            <Font name="Calibri" size="22.0" />
-         </font>
-      </Text>
-      <TextField id=" " fx:id="Type" layoutX="280.0" layoutY="324.0" prefHeight="26.0" prefWidth="281.0" />
+      <TextField id=" " fx:id="Type" layoutX="280.0" layoutY="276.0" prefHeight="26.0" prefWidth="281.0" />
    </children>
 </AnchorPane>

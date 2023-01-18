@@ -34,8 +34,6 @@ public class SceneController {
     @FXML
     private TableColumn<DonHangDataBase, Double> CostCol;
     @FXML
-    private TableColumn<DonHangDataBase, Double> CostPerm2Col;
-    @FXML
     private TableColumn<DonHangDataBase, String> CusCol;
     @FXML
     private TableColumn<DonHangDataBase, String> TimeCol;
@@ -50,7 +48,7 @@ public class SceneController {
     @FXML
     private TextField SearchField;
     private ObservableList<DonHangDataBase> DonHangList= FXCollections.observableArrayList();
-    private ObservableList<String> SelectList = FXCollections.observableArrayList("Name","Address","Type","Area Above","Exit Search");
+    private ObservableList<String> SelectList = FXCollections.observableArrayList("Name","Address","Type","Area Above","Cost Above","Exit Search");
     private DonHangDataBase donHang = null;
     private String query;
     private String url = "jdbc:mysql://localhost:3306/oop";
@@ -76,7 +74,6 @@ public class SceneController {
                             rs.getString("Address"),
                             rs.getString("TimeAdd"),
                             rs.getDouble("Area"),
-                            rs.getDouble("CostPer1m2"),
                             rs.getDouble("Cost"),
                             rs.getString("Type")));
             }
@@ -84,7 +81,6 @@ public class SceneController {
             AddressCol.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
             TimeCol.setCellValueFactory(new PropertyValueFactory<>("ThoiGianThem"));
             AreaCol.setCellValueFactory(new PropertyValueFactory<>("dienTich"));
-            CostPerm2Col.setCellValueFactory(new PropertyValueFactory<>("ChiPhi1m2"));
             CostCol.setCellValueFactory(new PropertyValueFactory<>("TongPhi"));
             TypeCol.setCellValueFactory(new PropertyValueFactory<>("tenBang"));
             IDCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
@@ -175,9 +171,10 @@ public class SceneController {
           SearchController("Type");
       }
       else if (SearchCBox.getValue().equals("Exit Search")) refreshTable();
-      else {
+      else if (SearchCBox.getValue().equals("Area Above")) {
         SearchController("Area Above");
       }
+      else SearchController("Cost Above");
     }
     public void BackToMain(javafx.event.ActionEvent actionEvent) throws IOException{
         root = FXMLLoader.load(getClass().getResource("../View/Main.fxml"));
@@ -190,6 +187,11 @@ public class SceneController {
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
                 if (TypeSearh.equals("Area Above")) {
                     System.out.println("In");
+                    query = "SELECT * FROM `receipttable` WHERE Area > ?";
+                    ps = conn.prepareStatement(query);
+                    ps.setDouble(1,Double.parseDouble(SearchField.getText()));
+                }
+                else if (TypeSearh.equals("Cost Above")){
                     query = "SELECT * FROM `receipttable` WHERE Cost > ?";
                     ps = conn.prepareStatement(query);
                     ps.setDouble(1,Double.parseDouble(SearchField.getText()));
@@ -208,7 +210,6 @@ public class SceneController {
                             rs.getString("Address"),
                             rs.getString("TimeAdd"),
                             rs.getDouble("Area"),
-                            rs.getDouble("CostPer1m2"),
                             rs.getDouble("Cost"),
                             rs.getString("Type")));
                 }
@@ -216,7 +217,6 @@ public class SceneController {
                 AddressCol.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
                 TimeCol.setCellValueFactory(new PropertyValueFactory<>("ThoiGianThem"));
                 AreaCol.setCellValueFactory(new PropertyValueFactory<>("dienTich"));
-                CostPerm2Col.setCellValueFactory(new PropertyValueFactory<>("ChiPhi1m2"));
                 CostCol.setCellValueFactory(new PropertyValueFactory<>("TongPhi"));
                 TypeCol.setCellValueFactory(new PropertyValueFactory<>("tenBang"));
                 IDCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
@@ -279,5 +279,13 @@ public class SceneController {
         catch (SQLException sqlException){
 
         }
+    }
+    @FXML
+    public void EditPriceButton(MouseEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("../View/SuaDonGia.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

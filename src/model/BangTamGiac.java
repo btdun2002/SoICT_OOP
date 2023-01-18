@@ -1,18 +1,27 @@
 package model;
 
 public class BangTamGiac extends Bang {
-    public BangTamGiac(double dienTich, double phiMotMet) {
-        super(dienTich, phiMotMet);
+    protected double phiTang = 500000;
+    public BangTamGiac(double dienTich) {
+        super(dienTich);
         super.tenBang="Circle";
     }
 
     @Override
     public double getChiPhi() {
-        return super.getDienTich()*super.getPhiMotMet()+500000;
+        return super.getDienTich()*super.getPhiMotMet()+phiTang;
     }
 
     @Override
     public String getNameBang() {
         return "Triangle";
+    }
+
+    public double getPhiTang() {
+        return phiTang;
+    }
+
+    public void setPhiTang(double phiTang) {
+        this.phiTang = phiTang;
     }
 }

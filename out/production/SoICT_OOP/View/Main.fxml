@@ -33,7 +33,7 @@
         </columns>
       </TableView>
       <FontAwesomeIcon glyphName="USER_PLUS" layoutX="196.0" layoutY="84.0" onMouseClicked="#ThemHoaDon" size="30" />
-      <FontAwesomeIcon glyphName="SEARCH" layoutX="704.0" layoutY="84.0" size="30" />
+      <FontAwesomeIcon glyphName="SEARCH" layoutX="704.0" layoutY="84.0" onMouseClicked="#Search" size="30" />
       <FontAwesomeIcon glyphName="TABLE" layoutX="237.0" layoutY="86.0" size="35" />
       <TextField fx:id="SearchField" layoutX="482.0" layoutY="60.0" prefHeight="26.0" prefWidth="210.0" />
       <ComboBox fx:id="SearchCBox" layoutX="323.0" layoutY="60.0" prefWidth="150.0" />

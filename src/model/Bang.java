@@ -1,8 +1,8 @@
 package model;
 
 public class Bang {
-    double dienTich;
-    double phiMotMet= 30000;
+    protected double dienTich;
+    public static double phiMotMet= 30000;
     String tenBang;
 
     public void setPhiMotMet(double phiMotMet) {

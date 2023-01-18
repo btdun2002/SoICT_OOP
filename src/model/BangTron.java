@@ -1,7 +1,7 @@
 package model;
 
 public class BangTron extends Bang {
-    protected double phiTang = 500000;
+    public static double phiTang = 500000;
     public BangTron(double dienTich) {
         super(dienTich);
     }

@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="232.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SuaGiaController">
+<AnchorPane prefHeight="285.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SuaGiaController">
    <children>
-      <Text layoutX="70.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost per m2" textAlignment="CENTER">
+      <Text layoutX="55.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost per m2" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
@@ -19,12 +19,18 @@
          </font>
       </Text>
       <TextField fx:id="CostPerm2" layoutX="287.0" layoutY="76.0" prefHeight="26.0" prefWidth="281.0" />
-      <Text layoutX="70.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Additional Cost" textAlignment="CENTER">
+      <Text layoutX="55.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Additional Cost Circle" textAlignment="CENTER">
          <font>
             <Font name="Calibri" size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="AdditionalCost" layoutX="287.0" layoutY="124.0" prefHeight="26.0" prefWidth="281.0" />
-      <Button fx:id="EditCommit" layoutX="219.0" layoutY="192.0" mnemonicParsing="false" onAction="#EditButton" prefHeight="26.0" prefWidth="139.0" text="Edit" />
+      <TextField fx:id="AdditionalCostCircle" layoutX="287.0" layoutY="124.0" prefHeight="26.0" prefWidth="281.0" />
+      <Button fx:id="EditCommit" layoutX="217.0" layoutY="225.0" mnemonicParsing="false" onAction="#EditButton" prefHeight="26.0" prefWidth="139.0" text="Edit" />
+      <Text layoutX="55.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Additional Cost Triangle" textAlignment="CENTER">
+         <font>
+            <Font name="Calibri" size="22.0" />
+         </font>
+      </Text>
+      <TextField fx:id="AdditionalCostTriangle" layoutX="287.0" layoutY="165.0" prefHeight="26.0" prefWidth="281.0" />
    </children>
 </AnchorPane>

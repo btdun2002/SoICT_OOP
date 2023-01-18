@@ -1,7 +1,7 @@
 package model;
 
 public class BangTamGiac extends Bang {
-    protected double phiTang = 500000;
+    public static double phiTang = 500000;
     public BangTamGiac(double dienTich) {
         super(dienTich);
         super.tenBang="Circle";

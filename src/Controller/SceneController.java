@@ -1,23 +1,24 @@
 package Controller;
-import javafx.beans.Observable;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 import model.*;
 
-import javax.security.auth.callback.Callback;
-import java.awt.event.ActionEvent;
+//import javax.security.auth.callback.Callback;
+
 import java.io.IOException;
 import java.sql.*;
 public class SceneController {
@@ -40,24 +41,37 @@ public class SceneController {
     private TableColumn<DonHangDataBase, String> TimeCol;
     @FXML
     private TableColumn<DonHangDataBase, String> TypeCol;
-    ObservableList<DonHangDataBase> DonHangList= FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<DonHangDataBase,String> IDCol;
+    @FXML
+    private TableColumn<DonHangDataBase,String> editCol;
+    @FXML
+    private ComboBox<String> SearchCBox;
+    @FXML
+    private TextField SearchField;
+    private ObservableList<DonHangDataBase> DonHangList= FXCollections.observableArrayList();
+    private ObservableList<String> SelectList = FXCollections.observableArrayList("Name","Address","Type","Area Above");
+    private DonHangDataBase donHang = null;
+    private String query;
+    private String url = "jdbc:mysql://localhost:3306/oop";
+    private String pass = "";
+    private String username= "root";
+
     @FXML
     public void initialize(){
+        SearchCBox.setValue("Name");
+        SearchCBox.setItems(SelectList);
         loadTable();
     }
     public void refreshTable(){
-        System.out.println("rt");
-         String url = "jdbc:mysql://localhost:3306/oop";
-         String pass = "";
-         String username= "root";
+        DonHangList.clear();
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
-
-            System.out.println(conn.getCatalog());
             String query = "SELECT * FROM `receipttable`";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs =  ps.executeQuery();
             while (rs.next()) {
-                    DonHangList.add(new DonHangDataBase(rs.getString("CustomerName"),
+                    DonHangList.add(new DonHangDataBase(rs.getInt("ID"),
+                            rs.getString("CustomerName"),
                             rs.getString("Address"),
                             rs.getString("TimeAdd"),
                             rs.getDouble("Area"),
@@ -65,35 +79,89 @@ public class SceneController {
                             rs.getDouble("Cost"),
                             rs.getString("Type")));
             }
-
-
-
+            CusCol.setCellValueFactory(new PropertyValueFactory<>("ten"));
+            AddressCol.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
+            TimeCol.setCellValueFactory(new PropertyValueFactory<>("ThoiGianThem"));
+            AreaCol.setCellValueFactory(new PropertyValueFactory<>("dienTich"));
+            CostPerm2Col.setCellValueFactory(new PropertyValueFactory<>("ChiPhi1m2"));
+            CostCol.setCellValueFactory(new PropertyValueFactory<>("TongPhi"));
+            TypeCol.setCellValueFactory(new PropertyValueFactory<>("tenBang"));
+            IDCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
+            donHangTableView.setItems(DonHangList);
         }
         catch (SQLException throwables){
             throwables.printStackTrace();
         }
     }
     private void loadTable() {
-
+//        System.out.println("?");
         refreshTable();
-        CusCol.setCellValueFactory(new PropertyValueFactory<>("ten"));
-        AddressCol.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
-        TimeCol.setCellValueFactory(new PropertyValueFactory<>("ThoiGianThem"));
-        AreaCol.setCellValueFactory(new PropertyValueFactory<>("dienTich"));
-        CostPerm2Col.setCellValueFactory(new PropertyValueFactory<>("ChiPhi1m2"));
-        CostCol.setCellValueFactory(new PropertyValueFactory<>("TongPhi"));
-        TypeCol.setCellValueFactory(new PropertyValueFactory<>("tenBang"));
+
+        //add cell of button edit
+        Callback<TableColumn<DonHangDataBase, String>, TableCell<DonHangDataBase, String>> cellFoctory = (TableColumn<DonHangDataBase, String> param) -> {
+            // make cell containing buttons
+            final TableCell<DonHangDataBase, String> cell = new TableCell<DonHangDataBase, String>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    //that cell created only on non-empty rows
+                    if (empty) {
+                        setGraphic(null);
+                        setText(null);
+
+                    } else {
+
+                          Button xoaButton = new Button("Delete");
+                          Button suaButton = new Button("Edit");
+                        xoaButton.setOnMouseClicked((MouseEvent event) -> {
+                                  try(Connection conn = DriverManager.getConnection(url,username,pass)) {
+                                      donHang = donHangTableView.getSelectionModel().getSelectedItem();
+                                      query = "DELETE FROM `receipttable` WHERE ID =" + donHang.getID();
+                                      PreparedStatement ps = conn.prepareStatement(query);
+                                      ps.execute();
+                                      refreshTable();
+                                  }
+                                  catch (SQLException e){
+
+                                  }
+
+                        });
+                        suaButton.setOnMouseClicked((MouseEvent event) -> {
+                            try {
+                                donHang = donHangTableView.getSelectionModel().getSelectedItem();
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/SuaDonHang.fxml"));
+                                root = loader.load();
+                                SuaDonHangController suaDonHangController = loader.getController();
+                                suaDonHangController.setEdit(donHang);
+                                stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                                scene = new Scene(root);
+                                stage.setScene(scene);
+                                stage.show();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+
+                        HBox managebtn = new HBox(xoaButton,suaButton);
+                        managebtn.setStyle("-fx-alignment:center");
+                        HBox.setMargin(xoaButton, new Insets(2, 2, 0, 3));
+                        HBox.setMargin(suaButton, new Insets(2, 3, 0, 2));
+
+                        setGraphic(managebtn);
+                        setText(null);
+
+                    }
+                }
+
+            };
+
+            return cell;
+        };
+
+        editCol.setCellFactory(cellFoctory);
         donHangTableView.setItems(DonHangList);
 
-
-
-
-//        }
-//        catch (SQLException throwables){
-//
-//        }
     }
-
     @FXML
     public void ThemHoaDon(MouseEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../View/ThemDonHangScene.fxml"));
@@ -102,6 +170,10 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    public void Search(MouseEvent event) throws IOException {
+
+    }
     public void BackToMain(javafx.event.ActionEvent actionEvent) throws IOException{
         root = FXMLLoader.load(getClass().getResource("../View/Main.fxml"));
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -109,4 +181,5 @@ public class SceneController {
         stage.setScene(scene);
         stage.show();
     }
+
 }

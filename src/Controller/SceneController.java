@@ -43,10 +43,17 @@ public class SceneController {
     private TableColumn<DonHangDataBase,String> IDCol;
     @FXML
     private TableColumn<DonHangDataBase,String> editCol;
+
+    @FXML
+    private TextField CusNameSearch;
+    @FXML
+    private TextField TypeSearch;
+    @FXML
+    private TextField AddressSearch;
     @FXML
     private ComboBox<String> SearchCBox;
     @FXML
-    private TextField SearchField;
+    private TextField FilterField;
     private ObservableList<DonHangDataBase> DonHangList= FXCollections.observableArrayList();
     private ObservableList<String> SelectList = FXCollections.observableArrayList("Name","Address","Type","Area Above","Cost Above","Exit Search");
     private DonHangDataBase donHang = null;
@@ -62,6 +69,7 @@ public class SceneController {
         SearchCBox.setItems(SelectList);
         loadTable();
     }
+    @FXML
     public void refreshTable(){
         DonHangList.clear();
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
@@ -90,6 +98,7 @@ public class SceneController {
             throwables.printStackTrace();
         }
     }
+    @FXML
     private void loadTable() {
         refreshTable();
         //add cell of button edit
@@ -112,7 +121,7 @@ public class SceneController {
                                       query = "DELETE FROM `receipttable` WHERE ID =" + donHang.getID();
                                       PreparedStatement ps = conn.prepareStatement(query);
                                       ps.execute();
-                                      refreshTable();
+                                      loadTable();
                                   }
                                   catch (SQLException e){
                                   }
@@ -121,13 +130,13 @@ public class SceneController {
                             try {
                                 donHang = donHangTableView.getSelectionModel().getSelectedItem();
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/SuaDonHang.fxml"));
-                                root = loader.load();
+                                Parent root1 = loader.load();
                                 SuaDonHangController suaDonHangController = loader.getController();
                                 suaDonHangController.setEdit(donHang);
-                                stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                                scene = new Scene(root);
-                                stage.setScene(scene);
-                                stage.show();
+                                Stage stage1 = new Stage();
+                                Scene scene2 = new Scene(root1);
+                                stage1.setScene(scene2);
+                                stage1.show();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -153,58 +162,54 @@ public class SceneController {
     }
     @FXML
     public void ThemHoaDon(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("../View/ThemDonHangScene.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Parent root2 = FXMLLoader.load(getClass().getResource("../View/ThemDonHangScene.fxml"));
+        Stage stage1 = new Stage();
+        Scene scene2 = new Scene(root2);
+        stage1.setScene(scene2);
+        stage1.show();
     }
     @FXML
-    public void Search(MouseEvent event) throws IOException {
+    public void Filter(MouseEvent event) throws IOException {
       if(SearchCBox.getValue().equals("Name")){
-          SearchController("CustomerName");
+          FilterController("CustomerName");
       }
       else if (SearchCBox.getValue().equals("Address")){
-          SearchController("Address");
+          FilterController("Address");
       }
       else if (SearchCBox.getValue().equals("Type")){
-          SearchController("Type");
+          FilterController("Type");
       }
       else if (SearchCBox.getValue().equals("Exit Search")) refreshTable();
       else if (SearchCBox.getValue().equals("Area Above")) {
-        SearchController("Area Above");
+          FilterController("Area Above");
       }
-      else SearchController("Cost Above");
+      else FilterController("Cost Above");
     }
     public void BackToMain(javafx.event.ActionEvent actionEvent) throws IOException{
-        root = FXMLLoader.load(getClass().getResource("../View/Main.fxml"));
         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        stage.close();
     }
-    public void SearchController(String TypeSearh){
+    public void FilterController(String TypeFilter){
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
-                if (TypeSearh.equals("Area Above")) {
+                if (TypeFilter.equals("Area Above")) {
                     System.out.println("In");
                     query = "SELECT * FROM `receipttable` WHERE Area > ?";
                     ps = conn.prepareStatement(query);
-                    ps.setDouble(1,Double.parseDouble(SearchField.getText()));
+                    ps.setDouble(1,Double.parseDouble(FilterField.getText()));
                 }
-                else if (TypeSearh.equals("Cost Above")){
+                else if (TypeFilter.equals("Cost Above")){
                     query = "SELECT * FROM `receipttable` WHERE Cost > ?";
                     ps = conn.prepareStatement(query);
-                    ps.setDouble(1,Double.parseDouble(SearchField.getText()));
+                    ps.setDouble(1,Double.parseDouble(FilterField.getText()));
                 }
                 else {
-                    query = "SELECT * FROM `receipttable` WHERE " + TypeSearh + " = ?";
+                    query = "SELECT * FROM `receipttable` WHERE " + TypeFilter + " = ?";
                     ps = conn.prepareStatement(query);
-                    ps.setString(1,SearchField.getText());
+                    ps.setString(1,FilterField.getText());
                 }
             ResultSet rs = ps.executeQuery();
             DonHangList.clear();
                 while (rs.next()){
-                    System.out.println(SearchField.getText());
                     DonHangList.add(new DonHangDataBase(rs.getInt("ID"),
                             rs.getString("CustomerName"),
                             rs.getString("Address"),
@@ -265,7 +270,6 @@ public class SceneController {
                                 managebtn.setStyle("-fx-alignment:center");
                                 HBox.setMargin(xoaButton, new Insets(2, 2, 0, 3));
                                 HBox.setMargin(suaButton, new Insets(2, 3, 0, 2));
-
                                 setGraphic(managebtn);
                                 setText(null);
                             }
@@ -282,10 +286,99 @@ public class SceneController {
     }
     @FXML
     public void EditPriceButton(MouseEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("../View/SuaDonGia.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Parent root2 = FXMLLoader.load(getClass().getResource("../View/SuaDonGia.fxml"));
+        Stage stage1 = new Stage();
+        Scene scene2 = new Scene(root2);
+        stage1.setScene(scene2);
+        stage1.show();
+    }
+    @FXML
+    public void Search(MouseEvent event) throws IOException{
+        try (Connection conn = DriverManager.getConnection(url,username,pass)){
+//            System.out.println("Test");
+            query = "SELECT * FROM `receipttable` WHERE CustomerName = ? AND Address = ? AND Type = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1,CusNameSearch.getText());
+            ps.setString(2,AddressSearch.getText());
+            ps.setString(3,TypeSearch.getText());
+            ResultSet rs = ps.executeQuery();
+
+            DonHangList.clear();
+            while (rs.next()){
+                System.out.println(CusNameSearch.getText());
+                DonHangList.add(new DonHangDataBase(rs.getInt("ID"),
+                        rs.getString("CustomerName"),
+                        rs.getString("Address"),
+                        rs.getString("TimeAdd"),
+                        rs.getDouble("Area"),
+                        rs.getDouble("Cost"),
+                        rs.getString("Type")));
+            }
+            CusCol.setCellValueFactory(new PropertyValueFactory<>("ten"));
+            AddressCol.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
+            TimeCol.setCellValueFactory(new PropertyValueFactory<>("ThoiGianThem"));
+            AreaCol.setCellValueFactory(new PropertyValueFactory<>("dienTich"));
+            CostCol.setCellValueFactory(new PropertyValueFactory<>("TongPhi"));
+            TypeCol.setCellValueFactory(new PropertyValueFactory<>("tenBang"));
+            IDCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
+//                donHangTableView.setItems(DonHangList);
+            Callback<TableColumn<DonHangDataBase, String>, TableCell<DonHangDataBase, String>> cellFoctory = (TableColumn<DonHangDataBase, String> param) -> {
+                // make cell containing buttons
+                final TableCell<DonHangDataBase, String> cell = new TableCell<DonHangDataBase, String>() {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        //that cell created only on non-empty rows
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            Button xoaButton = new Button("Delete");
+                            Button suaButton = new Button("Edit");
+                            xoaButton.setOnMouseClicked((MouseEvent event) -> {
+                                try(Connection conn = DriverManager.getConnection(url,username,pass)) {
+                                    donHang = donHangTableView.getSelectionModel().getSelectedItem();
+                                    query = "DELETE FROM `receipttable` WHERE ID =" + donHang.getID();
+                                    PreparedStatement ps = conn.prepareStatement(query);
+                                    ps.execute();
+                                    refreshTable();
+                                }
+                                catch (SQLException e){
+                                }
+                            });
+                            suaButton.setOnMouseClicked((MouseEvent event) -> {
+                                try {
+                                    donHang = donHangTableView.getSelectionModel().getSelectedItem();
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../View/SuaDonHang.fxml"));
+                                    root = loader.load();
+                                    SuaDonHangController suaDonHangController = loader.getController();
+                                    suaDonHangController.setEdit(donHang);
+                                    stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                                    scene = new Scene(root);
+                                    stage.setScene(scene);
+                                    stage.show();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+
+                            HBox managebtn = new HBox(xoaButton,suaButton);
+                            managebtn.setStyle("-fx-alignment:center");
+                            HBox.setMargin(xoaButton, new Insets(2, 2, 0, 3));
+                            HBox.setMargin(suaButton, new Insets(2, 3, 0, 2));
+                            setGraphic(managebtn);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            };
+            editCol.setCellFactory(cellFoctory);
+            donHangTableView.setItems(DonHangList);
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

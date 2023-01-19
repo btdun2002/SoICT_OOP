@@ -1,12 +1,16 @@
 package Controller;
 
 import com.sun.javafx.fxml.builder.web.WebEngineBuilder;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 import model.Bang;
 import model.BangTamGiac;
@@ -30,10 +34,14 @@ public class ThemDonHangController {
     @FXML
     TextField Area;
     @FXML
-    TextField Time;
+    DatePicker Time;
     @FXML
-    TextField Type;
-
+    ComboBox<String> Type;
+    private ObservableList<String> SelectList = FXCollections.observableArrayList("Normal","Triangle","Circle");
+    public void initialize() {
+        Type.setValue("Normal");
+        Type.setItems(SelectList);
+    }
     @FXML
     public void ThemButton(ActionEvent ActionEvent) throws IOException {
         DonHang a;
@@ -43,16 +51,16 @@ public class ThemDonHangController {
         String username= "root";
 //        System.out.println(Type.getText());
 
-        if (Type.getText().equals("Normal")) {
+        if (Type.getValue().equals("Normal")) {
             b = new Bang(Double.parseDouble(Area.getText()));
 
         }
-        else if (Type.getText().equals("Triangle")){
+        else if (Type.getValue().equals("Triangle")){
             // UpCasting
             b = new BangTamGiac(Double.parseDouble(Area.getText()));
 
         }
-        else if (Type.getText().equals("Circle")){
+        else if (Type.getValue().equals("Circle")){
             // UpCasting
             b = new BangTron(Double.parseDouble(Area.getText()));
 
@@ -60,7 +68,7 @@ public class ThemDonHangController {
         else {b=new Bang();
 
         }
-        a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getText());
+        a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getValue().toString());
 
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
             String Insert = "INSERT INTO `receipttable`(`CustomerName`, `TimeAdd`, `Address`, `Area`,`Cost`,`Type`) VALUES (?,?,?,?,?,?)";

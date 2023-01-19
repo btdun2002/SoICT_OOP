@@ -19,6 +19,7 @@ public class MainStage extends Application {
             stage.initStyle(StageStyle.DECORATED);
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.setTitle("Trang chủ");
             stage.show();
         }
         catch (Exception e){

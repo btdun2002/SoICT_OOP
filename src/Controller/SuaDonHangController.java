@@ -1,23 +1,14 @@
 package Controller;
 
-import com.sun.javafx.fxml.builder.web.WebEngineBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.stage.Stage;
-import model.Bang;
-import model.BangTamGiac;
-import model.BangTron;
-import model.DonHang;
-
 import javafx.scene.control.TextField;
+import model.*;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -25,32 +16,32 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
-public class ThemDonHangController {
+public class SuaDonHangController
+{
     @FXML
-    TextField CustomerName;
+    private TextField Area;
     @FXML
-    TextField CustomerAddress;
+    private TextField CustomerAddress;
+
     @FXML
-    TextField Area;
+    private TextField CustomerName;
     @FXML
-    DatePicker Time;
+    private Button EditCommit;
     @FXML
-    ComboBox<String> Type;
+    private DatePicker Time;
+    @FXML
+    private ComboBox<String> Type;
     private ObservableList<String> SelectList = FXCollections.observableArrayList("Normal","Triangle","Circle");
-    public void initialize() {
-        Type.setValue("Normal");
-        Type.setItems(SelectList);
-    }
+    private int ID;
     @FXML
-    public void ThemButton(ActionEvent ActionEvent) throws IOException {
+    void EditButton(ActionEvent ActionEvent) throws IOException {
         DonHang a;
         Bang b;
         String url = "jdbc:mysql://localhost:3306/oop";
         String pass = "";
         String username= "root";
-//        System.out.println(Type.getText());
-
         if (Type.getValue().equals("Normal")) {
             b = new Bang(Double.parseDouble(Area.getText()));
 
@@ -69,9 +60,10 @@ public class ThemDonHangController {
 
         }
         a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getValue().toString());
-
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
-            String Insert = "INSERT INTO `receipttable`(`CustomerName`, `TimeAdd`, `Address`, `Area`,`Cost`,`Type`) VALUES (?,?,?,?,?,?)";
+            String Insert = "UPDATE `receipttable` SET`CustomerName`=?," +
+                    "`TimeAdd`=?,`Address`=?,`Area`=?," +
+                    "`Cost`=?,`Type`= ? WHERE `ID` = "+this.ID;
             PreparedStatement ps = conn.prepareStatement(Insert);
             ps.setString(1,a.getTen());
             ps.setString(2,a.getThoiGianThem());
@@ -85,9 +77,19 @@ public class ThemDonHangController {
         catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-       JOptionPane.showMessageDialog(null,"Adding successfully","Success",JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null,"Edit successfully","Success",JOptionPane.PLAIN_MESSAGE);
         SceneController sceneController=new SceneController();
         sceneController.BackToMain(ActionEvent);
+    }
+    public void  setEdit(DonHangDataBase donHangDataBase){
+
+        CustomerName.setText(donHangDataBase.getTen());
+        this.Area.setText(String.valueOf(donHangDataBase.getDienTich()));
+        this.CustomerAddress.setText(donHangDataBase.getDiaChi());
+        this.Time.setValue(LocalDate.parse(donHangDataBase.getThoiGianThem()));
+        Type.setItems(SelectList);
+        this.Type.setValue(donHangDataBase.getTenBang());
+        ID = donHangDataBase.getID();
     }
 
 }

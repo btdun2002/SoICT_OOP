@@ -5,13 +5,13 @@ public class DonHang {
     String diaChi;
     String ThoiGianThem;
     Bang bang;
-
     public DonHang(String ten, String diaChi, Bang bang, String thoiGianThem) {
         this.ten = ten;
         this.diaChi = diaChi;
         this.bang = bang;
         this.ThoiGianThem=thoiGianThem;
     }
+
     public DonHang() {}
     public String getTen() {
         return ten;

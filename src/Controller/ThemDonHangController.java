@@ -28,66 +28,78 @@ import java.sql.SQLException;
 
 public class ThemDonHangController {
     @FXML
-    TextField CustomerName;
+    private TextField CustomerName;
     @FXML
-    TextField CustomerAddress;
+    private TextField CustomerAddress;
     @FXML
-    TextField Area;
+    private TextField Area;
     @FXML
-    DatePicker Time;
+    private DatePicker Time;
     @FXML
-    ComboBox<String> Type;
+    private ComboBox<String> Type;
     private ObservableList<String> SelectList = FXCollections.observableArrayList("Normal","Triangle","Circle");
+    private DonHang donHang;
+    private Bang bang;
     public void initialize() {
         Type.setValue("Normal");
         Type.setItems(SelectList);
     }
     @FXML
     public void ThemButton(ActionEvent ActionEvent) throws IOException {
-        DonHang a;
-        Bang b;
+
         String url = "jdbc:mysql://localhost:3306/oop";
         String pass = "";
         String username= "root";
-//        System.out.println(Type.getText());
+        if (CustomerAddress.getText().isEmpty() | CustomerName.getText().isEmpty()| Area.getText().isEmpty() | Time.getValue()== null) {
+            JOptionPane.showMessageDialog(null,"Please enter all the field", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!isNumeric(Area.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter an number in Area field", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         if (Type.getValue().equals("Normal")) {
-            b = new Bang(Double.parseDouble(Area.getText()));
-
+            bang = new Bang(Double.parseDouble(Area.getText()));
         }
         else if (Type.getValue().equals("Triangle")){
             // UpCasting
-            b = new BangTamGiac(Double.parseDouble(Area.getText()));
+            bang = new BangTamGiac(Double.parseDouble(Area.getText()));
 
         }
-        else if (Type.getValue().equals("Circle")){
+        else {
             // UpCasting
-            b = new BangTron(Double.parseDouble(Area.getText()));
-
+            bang = new BangTron(Double.parseDouble(Area.getText()));
         }
-        else {b=new Bang();
 
-        }
-        a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getValue().toString());
+        donHang = new DonHang(CustomerName.getText(),CustomerAddress.getText(),bang,Time.getValue().toString());
 
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
             String Insert = "INSERT INTO `receipttable`(`CustomerName`, `TimeAdd`, `Address`, `Area`,`Cost`,`Type`) VALUES (?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(Insert);
-            ps.setString(1,a.getTen());
-            ps.setString(2,a.getThoiGianThem());
-            ps.setString(3,a.getDiaChi());
-            ps.setDouble(4,a.getBang().getDienTich());
-            ps.setDouble(5,a.getBang().getChiPhi());
-            ps.setString(6,a.getBang().getNameBang());
+            ps.setString(1,donHang.getTen());
+            ps.setString(2,donHang.getThoiGianThem());
+            ps.setString(3,donHang.getDiaChi());
+            ps.setDouble(4,donHang.getBang().getDienTich());
+            ps.setDouble(5,donHang.getBang().getChiPhi());
+            ps.setString(6,donHang.getBang().getNameBang());
             ps.execute();
         }
 
         catch (SQLException throwables) {
-            throwables.printStackTrace();
+//            throwables.printStackTrace();
+
         }
-       JOptionPane.showMessageDialog(null,"Adding successfully","Success",JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null,"Adding successfully","Success",JOptionPane.PLAIN_MESSAGE);
         SceneController sceneController=new SceneController();
         sceneController.BackToMain(ActionEvent);
     }
-
+    public boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
 }

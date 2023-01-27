@@ -43,19 +43,25 @@ public class SceneController {
     private TableColumn<DonHangDataBase,String> IDCol;
     @FXML
     private TableColumn<DonHangDataBase,String> editCol;
-
     @FXML
     private TextField CusNameSearch;
     @FXML
-    private TextField TypeSearch;
+    private ComboBox<String> TypeSearch;
     @FXML
     private TextField AddressSearch;
     @FXML
     private ComboBox<String> SearchCBox;
     @FXML
     private TextField FilterField;
+    @FXML
+    private TextField CurrentCircle;
+    @FXML
+    private TextField CurrentCost;
+    @FXML
+    private TextField CurrentTriangle;
     private ObservableList<DonHangDataBase> DonHangList= FXCollections.observableArrayList();
     private ObservableList<String> SelectList = FXCollections.observableArrayList("Name","Address","Type","Area Above","Cost Above","Exit Search");
+    private ObservableList<String> SelectList2 = FXCollections.observableArrayList("Normal","Triangle","Circle");
     private DonHangDataBase donHang = null;
     private String query;
     private String url = "jdbc:mysql://localhost:3306/oop";
@@ -65,12 +71,19 @@ public class SceneController {
 
     @FXML
     public void initialize(){
+        CurrentCost.setText(String.valueOf(Bang.phiMotMet));
+        CurrentCircle.setText(String.valueOf(BangTron.phiTang));
+        CurrentTriangle.setText(String.valueOf(BangTamGiac.phiTang));
         SearchCBox.setValue("Name");
         SearchCBox.setItems(SelectList);
+        TypeSearch.setItems(SelectList2);
         loadTable();
     }
     @FXML
     public void refreshTable(){
+        CurrentCost.setText(String.valueOf(Bang.phiMotMet));
+        CurrentCircle.setText(String.valueOf(BangTron.phiTang));
+        CurrentTriangle.setText(String.valueOf(BangTamGiac.phiTang));
         DonHangList.clear();
         try (Connection conn = DriverManager.getConnection(url,username,pass)){
             String query = "SELECT * FROM `receipttable`";
@@ -101,7 +114,7 @@ public class SceneController {
     @FXML
     private void loadTable() {
         refreshTable();
-        //add cell of button edit
+        //add cell of button edit and delete
         Callback<TableColumn<DonHangDataBase, String>, TableCell<DonHangDataBase, String>> cellFoctory = (TableColumn<DonHangDataBase, String> param) -> {
             // make cell containing buttons
             final TableCell<DonHangDataBase, String> cell = new TableCell<DonHangDataBase, String>() {
@@ -149,7 +162,6 @@ public class SceneController {
 
                         setGraphic(managebtn);
                         setText(null);
-
                     }
                 }
 
@@ -225,7 +237,7 @@ public class SceneController {
                 CostCol.setCellValueFactory(new PropertyValueFactory<>("TongPhi"));
                 TypeCol.setCellValueFactory(new PropertyValueFactory<>("tenBang"));
                 IDCol.setCellValueFactory(new PropertyValueFactory<>("ID"));
-//                donHangTableView.setItems(DonHangList);
+
                 Callback<TableColumn<DonHangDataBase, String>, TableCell<DonHangDataBase, String>> cellFoctory = (TableColumn<DonHangDataBase, String> param) -> {
                     // make cell containing buttons
                     final TableCell<DonHangDataBase, String> cell = new TableCell<DonHangDataBase, String>() {
@@ -300,7 +312,7 @@ public class SceneController {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1,CusNameSearch.getText());
             ps.setString(2,AddressSearch.getText());
-            ps.setString(3,TypeSearch.getText());
+            ps.setString(3,TypeSearch.getValue());
             ResultSet rs = ps.executeQuery();
 
             DonHangList.clear();
@@ -375,7 +387,6 @@ public class SceneController {
             };
             editCol.setCellFactory(cellFoctory);
             donHangTableView.setItems(DonHangList);
-
         }
         catch (SQLException e){
             e.printStackTrace();

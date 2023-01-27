@@ -35,28 +35,32 @@ public class SuaDonHangController
     private ComboBox<String> Type;
     private ObservableList<String> SelectList = FXCollections.observableArrayList("Normal","Triangle","Circle");
     private int ID;
+    private DonHang a;
+    private Bang b;
     @FXML
     void EditButton(ActionEvent ActionEvent) throws IOException {
-        DonHang a;
-        Bang b;
         String url = "jdbc:mysql://localhost:3306/oop";
         String pass = "";
         String username= "root";
+        if (CustomerAddress.getText().isEmpty() | CustomerName.getText().isEmpty()| Area.getText().isEmpty() | Time.getValue()== null) {
+            JOptionPane.showMessageDialog(null,"Please enter all the field", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!isNumeric(Area.getText())){
+            JOptionPane.showMessageDialog(null,"Please enter an number in Area field", "Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (Type.getValue().equals("Normal")) {
             b = new Bang(Double.parseDouble(Area.getText()));
-
         }
         else if (Type.getValue().equals("Triangle")){
             // UpCasting
             b = new BangTamGiac(Double.parseDouble(Area.getText()));
 
         }
-        else if (Type.getValue().equals("Circle")){
+        else {
             // UpCasting
             b = new BangTron(Double.parseDouble(Area.getText()));
-
-        }
-        else {b=new Bang();
 
         }
         a = new DonHang(CustomerName.getText(),CustomerAddress.getText(),b,Time.getValue().toString());
@@ -91,5 +95,12 @@ public class SuaDonHangController
         this.Type.setValue(donHangDataBase.getTenBang());
         ID = donHangDataBase.getID();
     }
-
+    public boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
 }

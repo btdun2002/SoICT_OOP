@@ -1,10 +1,10 @@
 package model;
 
 public class DonHang {
-    String ten;
-    String diaChi;
-    String ThoiGianThem;
-    Bang bang;
+    private String ten;
+    private String diaChi;
+    private String ThoiGianThem;
+    private Bang bang;
     public DonHang(String ten, String diaChi, Bang bang, String thoiGianThem) {
         this.ten = ten;
         this.diaChi = diaChi;

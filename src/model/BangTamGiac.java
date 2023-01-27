@@ -17,11 +17,4 @@ public class BangTamGiac extends Bang {
         return "Triangle";
     }
 
-    public double getPhiTang() {
-        return phiTang;
-    }
-
-    public void setPhiTang(double phiTang) {
-        this.phiTang = phiTang;
-    }
-}
+   }

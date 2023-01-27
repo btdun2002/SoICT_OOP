@@ -15,12 +15,4 @@ public class BangTron extends Bang {
     public String getNameBang() {
         return "Circle";
     }
-
-    public double getPhiTang() {
-        return phiTang;
-    }
-
-    public void setPhiTang(double phiTang) {
-        this.phiTang = phiTang;
-    }
-}
+   }

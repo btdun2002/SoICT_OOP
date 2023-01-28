@@ -1,3 +1,4 @@
+// Bui Trong Dung 20207594
 package model;
 
 public class DonHangDataBase {
@@ -8,6 +9,7 @@ public class DonHangDataBase {
     private Double dienTich;
     private Double TongPhi;
     private String tenBang;
+
     public DonHangDataBase(int ID, String ten, String diaChi, String thoiGianThem, Double dienTich, Double tongPhi, String tenBang) {
         this.ID = ID;
         this.ten = ten;

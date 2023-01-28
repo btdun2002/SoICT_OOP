@@ -1,7 +1,9 @@
+// Bui Trong Dung 20207594
 package model;
 
 public class BangTron extends Bang {
     public static double phiTang = 500000;
+
     public BangTron(double dienTich) {
         super(dienTich);
     }

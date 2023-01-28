@@ -1,3 +1,4 @@
+// Bui Trong Dung 20207594
 package model;
 
 public class DonHang {
@@ -5,6 +6,7 @@ public class DonHang {
     private String diaChi;
     private String ThoiGianThem;
     private Bang bang;
+
     public DonHang(String ten, String diaChi, Bang bang, String thoiGianThem) {
         this.ten = ten;
         this.diaChi = diaChi;

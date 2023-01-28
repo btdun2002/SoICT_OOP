@@ -1,7 +1,9 @@
+// Bui Trong Dung 20207594
 package model;
 
 public class BangTamGiac extends Bang {
     public static double phiTang = 500000;
+
     public BangTamGiac(double dienTich) {
         super(dienTich);
         super.tenBang="Circle";

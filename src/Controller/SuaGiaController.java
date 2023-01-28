@@ -23,8 +23,9 @@ public class SuaGiaController {
 
     @FXML
     private Button EditCommit;
+
     @FXML
-    public void initialize(){
+    public void initialize() {
         CostPerm2.setText(String.valueOf(Bang.phiMotMet));
         AdditionalCostTriangle.setText(String.valueOf(BangTamGiac.phiTang));
         AdditionalCostCircle.setText(String.valueOf(BangTron.phiTang));
@@ -33,10 +34,10 @@ public class SuaGiaController {
     @FXML
     void EditButton(ActionEvent ActionEvent) throws IOException {
         Bang.phiMotMet = Double.parseDouble(CostPerm2.getText());
-        BangTron.phiTang= Double.parseDouble(AdditionalCostCircle.getText());
-        BangTamGiac.phiTang= Double.parseDouble(AdditionalCostTriangle.getText());
-        JOptionPane.showMessageDialog(null,"Edit successfully","Success",JOptionPane.PLAIN_MESSAGE);
-        SceneController sceneController=new SceneController();
+        BangTron.phiTang = Double.parseDouble(AdditionalCostCircle.getText());
+        BangTamGiac.phiTang = Double.parseDouble(AdditionalCostTriangle.getText());
+        JOptionPane.showMessageDialog(null, "Edit successfully", "Success", JOptionPane.PLAIN_MESSAGE);
+        SceneController sceneController = new SceneController();
         sceneController.BackToMain(ActionEvent);
     }
 }

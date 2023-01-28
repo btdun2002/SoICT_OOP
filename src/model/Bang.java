@@ -2,9 +2,8 @@ package model;
 
 public class Bang {
     protected double dienTich;
-    public static double phiMotMet= 30000;
+    public static double phiMotMet = 30000;
     protected String tenBang;
-
 
 
     public Bang() {
@@ -26,12 +25,14 @@ public class Bang {
         return phiMotMet;
     }
 
-    public String getNameBang(){
+    public String getNameBang() {
         return "Normal";
     }
+
     public double getChiPhi() {
         return phiMotMet * dienTich;
     }
+
     public void setPhiMotMet(double phiMotMet) {
         this.phiMotMet = phiMotMet;
     }

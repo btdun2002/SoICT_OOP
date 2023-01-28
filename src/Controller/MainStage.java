@@ -22,8 +22,7 @@ public class MainStage extends Application {
             stage.setTitle("Trang chủ");
 
             stage.show();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
     }

@@ -5,14 +5,17 @@ public class DonHang {
     private String diaChi;
     private String ThoiGianThem;
     private Bang bang;
+
     public DonHang(String ten, String diaChi, Bang bang, String thoiGianThem) {
         this.ten = ten;
         this.diaChi = diaChi;
         this.bang = bang;
-        this.ThoiGianThem=thoiGianThem;
+        this.ThoiGianThem = thoiGianThem;
     }
 
-    public DonHang() {}
+    public DonHang() {
+    }
+
     public String getTen() {
         return ten;
     }
@@ -32,9 +35,11 @@ public class DonHang {
     public Bang getBang() {
         return bang;
     }
+
     public void setBang(Bang bang) {
         this.bang = bang;
     }
+
     public String getThoiGianThem() {
         return ThoiGianThem;
     }

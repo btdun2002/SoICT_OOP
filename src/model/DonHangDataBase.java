@@ -8,6 +8,7 @@ public class DonHangDataBase {
     private Double dienTich;
     private Double TongPhi;
     private String tenBang;
+
     public DonHangDataBase(int ID, String ten, String diaChi, String thoiGianThem, Double dienTich, Double tongPhi, String tenBang) {
         this.ID = ID;
         this.ten = ten;
@@ -50,6 +51,7 @@ public class DonHangDataBase {
     public void setTenBang(String tenBang) {
         this.tenBang = tenBang;
     }
+
     public String getTen() {
         return ten;
     }
@@ -65,6 +67,7 @@ public class DonHangDataBase {
     public Double getDienTich() {
         return dienTich;
     }
+
     public Double getTongPhi() {
         return TongPhi;
     }

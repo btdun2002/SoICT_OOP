@@ -1,10 +1,12 @@
-// Bui Trong Dung 20207594
 package model;
 
 public class Bang {
     protected double dienTich;
     public static double phiMotMet= 30000;
     protected String tenBang;
+
+
+
     public Bang() {
     }
 

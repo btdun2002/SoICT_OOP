@@ -45,7 +45,6 @@ public class SuaGiaController {
 
     }
     public void UpdatePhiMotMet(double phi) {
-
         String url = "jdbc:mysql://localhost:3306/oop";
         String pass = "";
         String username= "root";

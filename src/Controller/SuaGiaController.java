@@ -11,6 +11,7 @@ import model.BangTron;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.sql.*;
 
 public class SuaGiaController {
     @FXML
@@ -32,11 +33,61 @@ public class SuaGiaController {
 
     @FXML
     void EditButton(ActionEvent ActionEvent) throws IOException {
-        Bang.phiMotMet = Double.parseDouble(CostPerm2.getText());
-        BangTron.phiTang= Double.parseDouble(AdditionalCostCircle.getText());
-        BangTamGiac.phiTang= Double.parseDouble(AdditionalCostTriangle.getText());
+        UpdatePhiMotMet(Double.parseDouble(CostPerm2.getText()));
+        Bang.setPhiMotMet();
+        UpdatePhiTangBangTron(Double.parseDouble(AdditionalCostCircle.getText()));
+        BangTron.setPhiTang();
+        UpdatePhiTangBangTamGiac(Double.parseDouble(AdditionalCostTriangle.getText()));
+        BangTamGiac.setPhiTang();
         JOptionPane.showMessageDialog(null,"Edit successfully","Success",JOptionPane.PLAIN_MESSAGE);
         SceneController sceneController=new SceneController();
         sceneController.BackToMain(ActionEvent);
+
+    }
+    public void UpdatePhiMotMet(double phi) {
+
+        String url = "jdbc:mysql://localhost:3306/oop";
+        String pass = "";
+        String username= "root";
+        String query = "UPDATE `fee` SET `CostPerM2`=? Where 1";
+        try (Connection conn = DriverManager.getConnection(url,username,pass)){
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setDouble(1,phi);
+            ps.execute();
+            ps.close();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void UpdatePhiTangBangTron(Double phiTang) {
+        String url = "jdbc:mysql://localhost:3306/oop";
+        String pass = "";
+        String username= "root";
+        String query = "UPDATE `fee` SET `AdditionalFeeCircle`=? WHERE 1;";
+        try (Connection conn = DriverManager.getConnection(url,username,pass)){
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setDouble(1,phiTang);
+            ps.execute();
+            ps.close();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void UpdatePhiTangBangTamGiac(Double phiTang) {
+        String url = "jdbc:mysql://localhost:3306/oop";
+        String pass = "";
+        String username= "root";
+        String query = "UPDATE `fee` SET `AdditionalFeeTriangle`=? WHERE 1;";
+        try (Connection conn = DriverManager.getConnection(url,username,pass)){
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setDouble(1,phiTang);
+            ps.execute();
+            ps.close();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

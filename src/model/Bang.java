@@ -1,17 +1,18 @@
 package model;
 
+import java.sql.*;
+
 public class Bang {
     protected double dienTich;
-    public static double phiMotMet= 30000;
+    public static double phiMotMet;
     protected String tenBang;
-
-
 
     public Bang() {
     }
 
     public Bang(double dienTich) {
         this.dienTich = dienTich;
+        setPhiMotMet();
     }
 
     public double getDienTich() {
@@ -32,7 +33,19 @@ public class Bang {
     public double getChiPhi() {
         return phiMotMet * dienTich;
     }
-    public void setPhiMotMet(double phiMotMet) {
-        this.phiMotMet = phiMotMet;
+    public static void setPhiMotMet() {
+        String url = "jdbc:mysql://localhost:3306/oop";
+        String pass = "";
+        String username= "root";
+        String query = "SELECT * FROM `fee` WHERE 1";
+        try (Connection conn = DriverManager.getConnection(url,username,pass)){
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                phiMotMet = rs.getDouble("CostPerM2");
+            }
+        }
+    catch (SQLException e){
+        }
     }
 }

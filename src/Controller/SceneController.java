@@ -72,6 +72,9 @@ public class SceneController {
 
     @FXML
     public void initialize(){
+        Bang.setPhiMotMet();
+        BangTamGiac.setPhiTang();
+        BangTron.setPhiTang();
         CurrentCost.setText(String.valueOf(Bang.phiMotMet));
         CurrentCircle.setText(String.valueOf(BangTron.phiTang));
         CurrentTriangle.setText(String.valueOf(BangTamGiac.phiTang));
@@ -82,6 +85,9 @@ public class SceneController {
     }
     @FXML
     public void refreshTable(){
+        Bang.setPhiMotMet();
+        BangTron.setPhiTang();
+        BangTamGiac.setPhiTang();
         CurrentCost.setText(String.valueOf(Bang.phiMotMet));
         CurrentCircle.setText(String.valueOf(BangTron.phiTang));
         CurrentTriangle.setText(String.valueOf(BangTamGiac.phiTang));
